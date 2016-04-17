@@ -35,6 +35,7 @@ if not hasattr(bot, 'module_store_alice_kernel'):
     for file in glob.glob(
         bot.userdata + "/aiml-en-us-foundation-alice/*.aiml"):
             bot.module_store_alice_kernel.learn(file)
+    bot.module_store_alice_kernel.respond("")
 
 
 class Module(bot.Module):
@@ -46,7 +47,7 @@ class Module(bot.Module):
         self.addcommand(
             self.go,
             "alice",
-            "Communicate with Alice (http://alicebot.org).", ["[input]"],
+            "Communicate with Alice (http://alicebot.org).", ["[input...]"],
             quote=False)
 
     def go(self, context, args):
