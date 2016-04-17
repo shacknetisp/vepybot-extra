@@ -29,6 +29,14 @@ import bot
 import aiml
 import glob
 
+if not hasattr(bot, 'module_store_alice_kernel'):
+    print("Loading ALICE")
+    bot.module_store_alice_kernel = aiml.Kernel()
+    for file in glob.glob(
+        bot.userdata + "/aiml-en-us-foundation-alice/*.aiml"):
+            bot.module_store_alice_kernel.learn(file)
+
+
 class Module(bot.Module):
 
     index = "alice"
@@ -40,13 +48,9 @@ class Module(bot.Module):
             "alice",
             "Communicate with Alice (http://alicebot.org).", ["[input]"])
 
-        self.k = aiml.Kernel()
-        for file in glob.glob(
-            bot.userdata + "/aiml-en-us-foundation-alice/*.aiml"):
-                self.k.learn(file)
-
     def go(self, context, args):
         args.default("input", "")
-        return self.k.respond(args.getstr('input')) or '...'
+        return bot.module_store_alice_kernel.respond(
+            args.getstr('input')) or '...'
 
 bot.register.module(Module)
