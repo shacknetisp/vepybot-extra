@@ -46,7 +46,8 @@ class Module(bot.Module):
         self.addcommand(
             self.go,
             "alice",
-            "Communicate with Alice (http://alicebot.org).", ["[input]"])
+            "Communicate with Alice (http://alicebot.org).", ["[input]"],
+            quote=False)
 
     def go(self, context, args):
         args.default("input", "")
